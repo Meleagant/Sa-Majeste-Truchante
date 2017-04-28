@@ -7,6 +7,7 @@
 %token PCNF
 %token EQ
 %token NEQ
+%token EOF
 
 %start file
 %type <Ast.instance_t> file
@@ -27,7 +28,7 @@ instance:
 ;
 
 file:
-	NEWLINE* PCNF v=NUM c=NUM NEWLINE+ i=instance {
+	NEWLINE* PCNF v=NUM c=NUM NEWLINE+ i=instance EOF {
 		Ast.({n_var = v; n_clause = c; clauses = i})
 	}
 ;

@@ -5,3 +5,5 @@
 *.native
 source/_build/
 
+smt
+
