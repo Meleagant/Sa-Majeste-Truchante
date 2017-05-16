@@ -51,7 +51,7 @@ sat_literal:
 ;
 
 sat_clause:
-	c=sat_literal+ END { c }
+	c=sat_literal+ NEWLINE? END { c }
 ;
 
 sat_instance:

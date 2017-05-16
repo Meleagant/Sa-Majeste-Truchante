@@ -24,7 +24,7 @@ let run_sat instance =
 	(* SMT *)
 	(*******)
 
-let load filename =
+let load_smt filename =
 
 	let file = open_in filename in
 	let lexbuf = Lexing.from_channel file in
@@ -39,23 +39,11 @@ let load filename =
 
 let () = begin
 
-	let smt_mode = ref true in
-	let filename = ref "" in
+	match Array.to_list Sys.argv with
+	| _ :: "--sat" :: filename :: _ ->
+		let i = load_sat filename in
+		run_sat i
+	| _ -> Format.printf "Wrong usage@."
 
-	for i = 1 to (Array.length Sys.argv) - 1 do
-		if Sys.argv.(i) = "--sat" then
-			smt_mode := false
-		else
-			filename := Sys.argv.(i)
-	done;
-
-	if !filename <> "" then begin
-		if !smt_mode then
-			assert false
-		else
-			run_sat (load_sat !filename)
-	end;
-
-	()
 end
 
