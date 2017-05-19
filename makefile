@@ -12,3 +12,6 @@ clean:
 	rm -f smt
 	cd source && ocamlbuild -clean
 
+%.cmo:
+	cd source && ocamlbuild $@ -use-menhir
+
