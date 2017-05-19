@@ -15,3 +15,7 @@ type result_t =
 | SAT of bool array
 | UNSAT
 
+module type Type = sig
+	val resolve : instance_t -> result_t
+end
+

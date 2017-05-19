@@ -3,7 +3,7 @@
 	(* SAT *)
 	(*******)
 
-module S = Sat_naive
+module S : Sat.Type = Sat_naive
 
 let load_sat filename =
 
