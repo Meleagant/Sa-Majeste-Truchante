@@ -34,6 +34,25 @@ let load_smt filename =
 	instance
 
 	(********)
+	(* TEST *)
+	(********)
+
+module Smt_S = Test_smt.Make (Sat_naive)
+
+let run_tests () = begin
+	let launch f =
+		try f () with
+		| Assert_failure (file, line, col) -> begin
+			Format.printf "  - (%s,%i,%i)@." file line col;
+			Format.printf "  - failed@."
+			end
+	in
+
+	launch Test_equality.run;
+	launch (Smt_S.run);
+end
+
+	(********)
 	(* main *)
 	(********)
 
@@ -43,6 +62,8 @@ let () = begin
 	| _ :: "--sat" :: filename :: _ ->
 		let i = load_sat filename in
 		run_sat i
+	| _ :: "--test" :: _ ->
+		run_tests ()
 	| _ -> Format.printf "Wrong usage@."
 
 end
