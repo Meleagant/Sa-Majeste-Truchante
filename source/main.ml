@@ -3,7 +3,7 @@
 	(* SAT *)
 	(*******)
 
-module S : Sat.Type = Sat_naive
+module S : Sat.Type = Sat_epate
 
 let load_sat filename =
 
@@ -24,20 +24,27 @@ let run_sat instance =
 	(* SMT *)
 	(*******)
 
-let load_smt filename =
+module SMT (T : Theory.Type) = struct
 
-	let file = open_in filename in
-	let lexbuf = Lexing.from_channel file in
-	let instance = Parser.file Lexer.token lexbuf in
-	let () = close_in file in
+	module I = Smt.Make (S) (T)
 
-	instance
+	let load_smt filename =
+
+		let file = open_in filename in
+		let lexbuf = Lexing.from_channel file in
+		let instance = Parser.file Lexer.token lexbuf in
+		let () = close_in file in
+
+		instance
+
+end
 
 	(********)
 	(* TEST *)
 	(********)
 
-module Smt_S = Test_smt.Make (Sat_naive)
+module Smt_Sn = Test_smt.Make (Sat_naive)
+module Smt_Se = Test_smt.Make (Sat_epate)
 
 let run_tests () = begin
 	let launch f =
@@ -49,7 +56,8 @@ let run_tests () = begin
 	in
 
 	launch Test_equality.run;
-	launch (Smt_S.run);
+	launch (Smt_Sn.run);
+	launch (Smt_Se.run);
 end
 
 	(********)
