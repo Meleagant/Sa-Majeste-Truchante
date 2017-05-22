@@ -1,4 +1,6 @@
 
+let name = "Sat naif ..."
+
 let verify_literal ba l =
 	match l with
 	| Sat.Var i -> ba.(i)

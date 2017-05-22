@@ -16,6 +16,7 @@ type result_t =
 | UNSAT
 
 module type Type = sig
+	val name : string
 	val resolve : instance_t -> result_t
 end
 
