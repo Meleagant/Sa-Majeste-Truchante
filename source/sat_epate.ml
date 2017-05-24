@@ -1,6 +1,7 @@
 open Sat
 module L = List
 module A = Array
+module R = Random
 
 exception NoBackTrackingLeft
 exception FalseClause
@@ -120,17 +121,16 @@ match decision with
 	end
 
 let find_undef value = 
-	let res = ref (-1)
-	and i = ref 0
+	(* TODO : à randomiser *)
+	let res = ref []
 	and l = A.length value 
 	in begin
-		while !res = -1 && !i < l do
-			if value.(!i) = Undef then
-				res := !i
-			else
-				incr i
+		for i = 0 to l-1 do
+			if value.(i) = Undef then
+				res := i::(!res)
 		done;
-		!res;
+		let l_res = L.length !res in
+		L.nth !res (R.int l_res);
 	end
 
 let solve clauses value decision = 
@@ -160,7 +160,10 @@ let solve clauses value decision =
 				let i = find_undef value 
 				in begin
 					decision := (Decision i)::(!decision);
-					value.(i) <- True;
+					value.(i) <- if R.int 2 = 0 then
+									True
+								 else
+								 	False;
 				end
 		with
 		| FalseClause ->

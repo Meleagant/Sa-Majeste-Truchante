@@ -105,8 +105,8 @@ let mesure n instance =
 
 let _ = 
 	let nb_var = 20
-	and nb_cl = 10
-	and nb_try = 10
+	and nb_cl = 35
+	and nb_try = 50
 	and t0 = ref 0.
 	and t1 = ref 0. 
 	in begin
@@ -129,6 +129,8 @@ let _ =
 				Printf.printf "==========> Pas Cool ! <==========\n ";
 		end
 	done;
+	t0 := !t0 /. (float_of_int nb_try);
+	t1 := !t1 /. (float_of_int nb_try);
 	Printf.printf "L'algo DCLL a fait ses calculs en %f s \n" !t0;
 	Printf.printf "L'algo naif a fait ses calculs en %f s \n" !t1;
 	end
