@@ -25,4 +25,5 @@ let check (p : atom_t list) : bool =
 			aux ps
 	in
 	aux p
+	
 

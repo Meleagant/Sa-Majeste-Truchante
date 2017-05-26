@@ -9,7 +9,7 @@ module Main (S : Sat.Type) = struct
 
 		let file = open_in filename in
 		let lexbuf = Lexing.from_channel file in
-		let instance = Parser.sat_file Lexer.token lexbuf in
+		let instance = Sat_parser.file Sat_lexer.token lexbuf in
 		let () = close_in file in
 
 		instance
@@ -23,21 +23,18 @@ module Main (S : Sat.Type) = struct
 		(*******)
 		(* SMT *)
 		(*******)
+	
+	module EQUALITY = Smt.Make (S) (Theory_equality)
 
-	module SMT (T : Theory.Type) = struct
+	let load_equality file =
+		
+		let file = open_in file in
+		let lexbuf = Lexing.from_channel file in
+		let instance = Theory_equality_parser.file
+			Theory_equality_lexer.token lexbuf in
+		let () = close_in file in
 
-		module I = Smt.Make (S) (T)
-
-		let load_smt filename =
-
-			let file = open_in filename in
-			let lexbuf = Lexing.from_channel file in
-			let instance = Parser.file Lexer.token lexbuf in
-			let () = close_in file in
-
-			instance
-
-	end
+		instance
 
 end
 
@@ -76,6 +73,9 @@ let () = begin
 		MAIN.run_sat i
 	| _ :: "--test" :: _ ->
 		run_tests ()
+	| _ :: filename :: _ ->
+		let i = MAIN.load_equality filename in
+		if MAIN.EQUALITY.resolve i then Format.printf "SAT@." else Format.printf "UNSAT@."
 	| _ -> Format.printf "Wrong usage@."
 
 end

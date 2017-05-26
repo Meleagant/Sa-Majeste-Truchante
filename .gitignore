@@ -1,9 +1,5 @@
 
-*~
 *.swp
-
-*.native
-source/_build/
-
 smt
+source/_build/
 
