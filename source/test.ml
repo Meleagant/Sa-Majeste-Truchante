@@ -66,7 +66,7 @@ let genere_litt nb_var =
 	*)
 
 let genere_cl nb_var = 
-	let l = (R.int (nb_var-1))/2 +1 in
+	let l =  (R.int (nb_var-1))/2 +1  in
 	L.map (fun () -> genere_litt nb_var) (A.to_list (A.make l ()))
 
 let genere nb_var nb_cl = 
@@ -105,8 +105,8 @@ let mesure n instance =
 
 let _ = 
 	let nb_var = 20
-	and nb_cl = 35
-	and nb_try = 50
+	and nb_cl = 60
+	and nb_try = 10
 	and t0 = ref 0.
 	and t1 = ref 0. 
 	in begin
