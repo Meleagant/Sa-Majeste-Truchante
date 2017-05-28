@@ -35,6 +35,18 @@ module Main (S : Sat.Type) = struct
 		let () = close_in file in
 
 		instance
+	
+	module INEQUALITY = Smt.Make (S) (Theory_inequality)
+
+	let load_inequality file =
+
+		let file = open_in file in
+		let lexbuf = Lexing.from_channel file in
+		let instance = Theory_inequality_parser.file
+			Theory_inequality_lexer.token lexbuf in
+		let () = close_in file in
+
+		instance
 
 end
 
@@ -73,6 +85,10 @@ let () = begin
 		MAIN.run_sat i
 	| _ :: "--test" :: _ ->
 		run_tests ()
+	| _ :: "--ineq" :: filename :: _ ->
+		let i = MAIN.load_inequality filename in
+		if MAIN.INEQUALITY.resolve i then Format.printf "SAT@." else Format.printf "UNSAT@."
+	| _ :: "--eq" :: filename :: _
 	| _ :: filename :: _ ->
 		let i = MAIN.load_equality filename in
 		if MAIN.EQUALITY.resolve i then Format.printf "SAT@." else Format.printf "UNSAT@."
