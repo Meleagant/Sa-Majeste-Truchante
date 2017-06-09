@@ -11,14 +11,14 @@ Solveur SAT :
 
 ### Présenation générale
 
-Le solveur SAT (appelé `sat_epate`) utilise un algorithme DPLL classique. 
+Le solveur SAT, appelé `sat_epate`, utilise un algorithme DPLL classique. 
 Le choix de la procédure à appliquer est dans l'ordre : 
-0. `SAT/Fail/Backtrack` (ces points ne se présentent jamais en me temps)
+0. `SAT/Fail/Backtrack` (ces points ne se présentent jamais en même temps)
 1. `Unit`
 2. `Decide`
 
 Fail et Backtrack sont gérés au moyen d'exception :
-* Si un clause est fausse : on backtrack
+* Si une clause est fausse : on backtrack
 * Si, pendant le backtrack, il n'ya plus de décision sur laquelle revenir,
   on fail.
 
@@ -49,7 +49,7 @@ Le solveur time-out sur les exemples suivants :
 
 #### Sur des tests générés aléatoirement
 
-On peut aussi appeler le solveur SAT sur des formules générées aléatoirment
+On peut aussi appeler le solveur SAT sur des formules générées aléatoirement
 avec la commande :
 
 	./smt --sat-rand <nbtest> <nbclause> <nbvar>
@@ -59,12 +59,12 @@ où :
 * `<nbclause>` est le nombre de clause dans la formule
 * `<nbvaraiable>` est le nombre de variables dans la formule
 
-Le programme renvoie alors le moyenne du temps de calcul nécessaire pour
+Le programme renvoie alors la moyenne du temps de calcul nécessaire pour
 chaque test (ce temps ne comprend que celui nécessaire pour la
 résolution, pas celui pour la génération de formule).
 On peut aussi comparer ce solveur avec le solveur `sat_naif` avec
-l'argument `--compare`. Attention au dela de quelques variables le
-solveur naïf est lent !
+l'argument `--compare`. Attention au dela de quelques variables (25 sur
+les ordis de l'ÉNS) le solveur naïf est lent !
 
 Solveur SMT :
 -------------
@@ -92,12 +92,12 @@ les différences.
 
 ### Utilisation
 
-Le solveur SMT ne s'utilise que sur des fichiers via la commande
+Le solveur SMT ne s'utilise que sur des fichiers via la commande :
 
 	./smt <filename>.cnfuf
 
 pour vérifier un fichier utilisant la théorie de l'égalité, ou avec la
-commande
+commande :
 
 	./smt --ineq <filename>.cnfuf
 
