@@ -35,6 +35,15 @@ L'option `--time` peut être réjoutée à la fin afin de mesurer le temps de
 l'exécution. Ce temps comprend celui nécessaire pour ouvrir le fichier et
 parser la formule.
 
+Une liste d'exemples est fournit dans `./example/sat`.
+
+Le solveur time-out sur les exemples suivants : 
+* example/sat/bf0432-007.cnf
+* example/sat/unsat/aim-100-1_6-no-1.cnf
+* example/sat/unsat/dubois20.cnf
+* example/sat/unsat/dubois21.cnf
+* example/sat/unsat/dubois22.cnf
+
 #### Sur des tests générés aléatoirement
 
 On peut aussi appeler le solveur SAT sur des formules générées aléatoirment
