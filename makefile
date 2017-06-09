@@ -7,7 +7,7 @@ all: smt
 	@
 
 smt:
-	cd source && ocamlbuild main.native -use-menhir -cflag -g
+	cd source && ocamlbuild main.native -use-menhir -libs unix -cflag -g
 	mv source/main.native smt
 
 test: smt

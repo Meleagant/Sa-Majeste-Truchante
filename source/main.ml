@@ -77,12 +77,15 @@ end
 
 module MAIN = Main(Sat_epate)
 
-let () = begin
-
-	match Array.to_list Sys.argv with
+let () =
+let t0 = Unix.gettimeofday () 
+in begin
+	(match Array.to_list Sys.argv with
 	| _ :: "--sat" :: filename :: _ ->
 		let i = MAIN.load_sat filename in
 		MAIN.run_sat i
+	| _ :: "--sat-rand":: _ ->
+		Test_sat.main ()
 	| _ :: "--test" :: _ ->
 		run_tests ()
 	| _ :: "--ineq" :: filename :: _ ->
@@ -92,7 +95,9 @@ let () = begin
 	| _ :: filename :: _ ->
 		let i = MAIN.load_equality filename in
 		if MAIN.EQUALITY.resolve i then Format.printf "SAT@." else Format.printf "UNSAT@."
-	| _ -> Format.printf "Wrong usage@."
+	| _ -> Format.printf "Wrong usage@.");
+if List.mem "--time" (Array.to_list Sys.argv) then
+Format.printf "Calcul effectué en %f s \n" (Unix.gettimeofday() -. t0);
 
 end
 
