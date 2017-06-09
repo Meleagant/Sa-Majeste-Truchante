@@ -5,6 +5,7 @@ Sa Majesté Truchante :
 	David REBOULLET
 
 Le projet se compile avec `make`.
+La commande `make clean` permet de supprimer les fichiers compilés.
 
 Solveur SAT :
 -------------
