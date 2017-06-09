@@ -26,9 +26,9 @@
 
 literal:
 	a=NUM LT b=NUM { Theory_inequality.([A_Lt (a-1,b-1)]) }
-|	a=NUM LE b=NUM { Theory_inequality.([A_Lt (a-1,b-1); A_Eq (a-1,b-1)]) }
+|	a=NUM LE b=NUM { Theory_inequality.([A_Ge (b-1,a-1)]) }
 |	a=NUM EQ b=NUM { Theory_inequality.([A_Eq (a-1,b-1)]) }
-|	a=NUM GE b=NUM { Theory_inequality.([A_Lt (b-1,a-1); A_Eq (a-1,b-1)]) }
+|	a=NUM GE b=NUM { Theory_inequality.([A_Ge (a-1,b-1)]) }
 |	a=NUM GT b=NUM { Theory_inequality.([A_Lt (b-1,a-1)]) }
 |	a=NUM NEQ b=NUM { Theory_inequality.([A_NEq (a-1,b-1)]) }
 ;

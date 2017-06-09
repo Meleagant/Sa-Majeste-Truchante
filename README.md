@@ -1,5 +1,10 @@
 Sa Majesté Truchante :
 ======================
+	
+	Josselin GIET
+	David REBOULLET
+
+Le projet se compile avec `make`.
 
 Solveur SAT :
 -------------
@@ -21,9 +26,7 @@ Par ailleurs, on utilise une heuristique pour déterminer la variable à
 décider : On choisit la variable non instanciée qui est la plus présente
 dans la formule.
 
-### Perforamnce
-
-Il y a plusieur moyens de tester la performance du solveur `sat_epate`
+### Utilisation
 
 #### Sur des fichiers 
 
@@ -60,7 +63,45 @@ Le programme renvoie alors le moyenne du temps de calcul nécessaire pour
 chaque test (ce temps ne comprend que celui nécessaire pour la
 résolution, pas celui pour la génération de formule).
 On peut aussi comparer ce solveur avec le solveur `sat_naif` avec
-l'argument `--compare`. Attention au dela de 
- variables le solveur naïf est lent !
+l'argument `--compare`. Attention au dela de quelques variables le
+solveur naïf est lent !
 
+Solveur SMT :
+-------------
+
+### Présentation générale
+
+Le solveur SMT implémente l'algorithme classique d'un solveur SMT sans trop
+de spécificité si ce n'est qu'il est présenté comme foncteur du solveur SAT
+et de la théorie. Cette dernière est composée d'un type `t` des litéraux,
+d'une comparateur `compare`, d'une négation `neg` involutive sur `compare`
+et d'une fonction `check` décidant une proposition formulée sous forme de
+conjonction de litéraux.
+
+Deux théories ont été implémentées : la théorie de l'égalité et celle des
+inégalitées sur un ordre complet infini. La première effectue uniquement un
+Union-Find sur les litéraux d'égalités pour ensuite tester dans un deuxième
+temps les inégalitées. La théorie des inégalitées rajoute en interne deux
+constructions : supérieur ou égal, et strictement inférieur par soucis de
+symmétrie par rapport à `neg`. Cette dernière construction est dans la
+théorie immédiatement remplacée par une conjonction de supérieur ou égal et
+différent. Après avoir traité les inégalitées, la théorie parcourt le
+graphe engendré par la relation supérieur ou égal pour unifier dans la
+structure d'Union-Find les boucles. Il ne reste alors plus qu'à vérifier
+les différences.
+
+### Utilisation
+
+Le solveur SMT ne s'utilise que sur des fichiers via la commande
+
+	./smt <filename>.cnfuf
+
+pour vérifier un fichier utilisant la théorie de l'égalité, ou avec la
+commande
+
+	./smt --ineq <filename>.cnfuf
+
+pour vérifier un fichier utilisant la théorie de l'inégalité.
+
+La commande `--time` est de plus toujours possible à la fin.
 
